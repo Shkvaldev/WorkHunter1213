@@ -1,3 +1,5 @@
+requests
+fake-headers
 aiogram
 aiohttp
 asyncio
