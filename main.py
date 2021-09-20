@@ -36,7 +36,8 @@ class SearchOpts(StatesGroup):
     area = State()
     currency = State()
     salary = State()
-    
+
+
 # Welcome func callback ru processing
 @dp.callback_query_handler(lambda callback: callback.data == 'ru_lang')
 async def welcome_ru_callback(callback_query: types.CallbackQuery):
@@ -238,27 +239,21 @@ async def process_salary(message: types.Message, state: FSMContext):
     lang = users_db.lookup_user(message.from_user.id)[1]
     async with state.proxy() as data1:
         data1['salary'] = message.text
-        try:
-            hhdata = hhparser.get_vacancies(data1)
-        except Exception as e:
-            print(e)
-        if hhdata['status'] == 200:
-            # Sending info(data1 array) to nueral network here with function 
-            # Now fake func, delete it pls :)
+        hhdata = hhparser.get_vacancies(data1)
+        if len(hhdata['items']) > 0:
             if lang == "ru":
-                await message.answer(f"Вы ввели: \nПрофессию: {data1['profession']} \nОпыт: {data1['experience']} \nРегион: {data1['area']} \nВалюту: {data1['currency']} \nЗ/п: {data1['salary']}")
-                await message.answer(f"Найдено {hhdata['pages']} страниц ✔️ Выведено первые 10 вакансий:")
+                await message.answer(f"Найдено {hhdata['pages']} страниц ✔️ Выведены первые вакансий:")
                 for i in range(10):
-                    await message.answer(f"Источник: {hhdata['items'][i]['url']} \n Должность: {hhdata['items'][i]['name']} \n Регион: {hhdata['items'][i]['area']['name']} \n Минимальная зарплата: {hhdata['items'][i]['salary']['from']} \n Максимальная зарплата: {hhdata['items'][i]['salary']['to']}")
+                    await message.answer(f"Источник: {hhdata['items'][i]['alternate_url']} \n Должность: {hhdata['items'][i]['name']} \n Регион: {hhdata['items'][i]['area']['name']} \n Минимальная зарплата: {hhdata['items'][i]['salary']['from']} \n Максимальная зарплата: {hhdata['items'][i]['salary']['to']}")
             elif lang == "en":
-                await message.answer(f"You entered: \nProfession: {data1['profession']} \nExperience: {data1['experience']} \nRegion: {data1['area']} \nCurrency: {data1['currency']} \nSalary: {data1['salary']}")
-                await message.answer(f"Found {hhdata['pages']} pages ✔️ Printed first ten vacancies:")
+                await message.answer(f"Found {hhdata['pages']} pages ✔️ Printed first vacancies:")
                 for i in range(10):
-                    await message.answer(f"Source: {hhdata['items'][i]['url']} \n Profession: {hhdata['items'][i]['name']} \n Region: {hhdata['items'][i]['area']['name']} \n Maximal salary: {hhdata['items'][i]['salary']['from']} \n Minimal salary: {hhdata['items'][i]['salary']['to']}")
+                    await message.answer(f"Source: {hhdata['items'][i]['alternate_url']} \n Profession: {hhdata['items'][i]['name']} \n Region: {hhdata['items'][i]['area']['name']} \n Maximal salary: {hhdata['items'][i]['salary']['from']} \n Minimal salary: {hhdata['items'][i]['salary']['to']}")
         else:
-            await message.answer(f"Unknown error: {hhdata['status']}")
-        # Sending info(data1 array) to nueral network here with function 
-        # Now fake func, delete it pls :)
+            if lang == "ru":
+                await message.answer(f"По вашему запросу ничего не найдено ☹️")
+            elif lang == "en":
+                await message.answer(f"Nothing was found for your request ☹️")
     # End dialog here
     await state.finish()
     

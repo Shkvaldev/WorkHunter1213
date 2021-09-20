@@ -8,15 +8,9 @@ import json
 
 # Initialization logger
 logger = logging.basicConfig(filename="HHParser.log", level=logging.DEBUG)
-# Initialization variables for parsing
+# Variables for parsing
 BASE_API_URL = "https://api.hh.ru/"
 MY_HEADERS = Headers(os="win",headers=False).generate() # Headers for parsing
-# HH api defintions
-EXPERIENCE_RU_DICT = {'0': 'Нет опыта', '1': 'От 1 до 3 лет', '2': 'От 3 до 6 лет', '3': 'Более 6 лет'}
-#EXPERIENCE_EN_DICT = {'0': 'Without experience', '1': '{'Accept': '*/*', 'Connection': 'keep-alive', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.109 Safari/537.36 OPR/51.0.2830.34'}Between 1 and 3', '2': 'Between 3 and 6', '3': 'More than 6'}
-AREA_DICT = {'RU': 113, 'UK': 5}
-
-# HH api defintions
 
 
 def get_vacancies(in_data):
@@ -44,8 +38,17 @@ def get_vacancies(in_data):
         out_data['items'] = dict()
         for key in range(len(first_answer['items'])):
             out_data['items'][key] = first_answer['items'][key]
+        for i in range(len(out_data['items'])):
+            if out_data['items'][i]['salary'] == None:
+                out_data['items'][i]['salary'] = dict()
+                out_data['items'][i]['salary']['from'] = 'Не указана'
+                out_data['items'][i]['salary']['to'] = 'Не указана'
+            elif out_data['items'][i]['salary']['from'] == None:
+                out_data['items'][i]['salary']['from'] = 'Не указано'
+            elif out_data['items'][i]['salary']['to'] == None:
+                out_data['items'][i]['salary']['to'] = 'Не указано'
         return out_data
     else:
         out_data['status'] = req.status_code
+        out_data['items'] = dict()
         return out_data
-    # 
