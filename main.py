@@ -27,6 +27,7 @@ except Exception as e:
 
 users_db = user_db.Users_db("users.db")
 
+
 # Listenning
 
 
@@ -130,34 +131,35 @@ async def search(message: types.Message):
 # custom_position state
 @dp.message_handler(state=SearchOpts.custom_position)
 async def process_custom_position(message: types.Message, state: FSMContext):
-    lang = users_db.lookup_user(message.from_user.id)[1]
-    if lang == "ru":
-        async with state.proxy() as data1:
-            data1['custom_position'] = message.text
-        await SearchOpts.next()
-        full_day = types.KeyboardButton("Полный рабочий день")
-        free_schedule = types.KeyboardButton("Свободный график")
-        changeble_schedule = types.KeyboardButton("Сменный график")
-        vahta_schedule = types.KeyboardButton("Вахта")
-        partial_schedule = types.KeyboardButton("Частичная занятость")
-        from_home_schedule = types.KeyboardButton("Удалённая работа")
-        unknown_schedule = types.KeyboardButton("Не имеет значения")
-        ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-        ikm.add(full_day, free_schedule, changeble_schedule, vahta_schedule, partial_schedule, from_home_schedule, unknown_schedule)
-        await message.answer("Выберите график работы:", reply_markup=ikm)
-    elif lang == "en":
-        async with state.proxy() as data1:
-            data1['custom_position'] = message.text
-        full_day = types.KeyboardButton("Full day")
-        free_schedule = types.KeyboardButton("Free schedule")
-        changeble_schedule = types.KeyboardButton("Changeble schedule")
-        vahta_schedule = types.KeyboardButton("Vahta")
-        partial_schedule = types.KeyboardButton("Partial schedule")
-        from_home_schedule = types.KeyboardButton("Work from home")
-        unknown_schedule = types.KeyboardButton("Does not matter")
-        ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-        ikm.add(full_day, free_schedule, changeble_schedule, vahta_schedule, partial_schedule, from_home_schedule, unknown_schedule)
-        await message.answer("Choose work schedule:", reply_markup=ikm)
+	lang = users_db.lookup_user(message.from_user.id)[1]
+	if lang == "ru":
+		async with state.proxy() as data1:
+			data1['custom_position'] = message.text
+		await SearchOpts.next()
+		full_day = types.KeyboardButton("Полный рабочий день")
+		free_schedule = types.KeyboardButton("Свободный график")
+		changeble_schedule = types.KeyboardButton("Сменный график")
+		vahta_schedule = types.KeyboardButton("Вахта")
+		partial_schedule = types.KeyboardButton("Частичная занятость")
+		from_home_schedule = types.KeyboardButton("Удалённая работа")
+		unknown_schedule = types.KeyboardButton("Не имеет значения")
+		ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+		ikm.add(full_day, free_schedule, changeble_schedule, vahta_schedule, partial_schedule, from_home_schedule, unknown_schedule)
+		await message.answer("Выберите график работы:", reply_markup=ikm)
+	elif lang == "en":
+		async with state.proxy() as data1:
+			data1['custom_position'] = message.text
+		await SearchOpts.next()
+		full_day = types.KeyboardButton("Full day")
+		free_schedule = types.KeyboardButton("Free schedule")
+		changeble_schedule = types.KeyboardButton("Changeble schedule")
+		vahta_schedule = types.KeyboardButton("Vahta")
+		partial_schedule = types.KeyboardButton("Partial schedule")
+		from_home_schedule = types.KeyboardButton("Work from home")
+		unknown_schedule = types.KeyboardButton("Does not matter")
+		ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+		ikm.add(full_day, free_schedule, changeble_schedule, vahta_schedule, partial_schedule, from_home_schedule, unknown_schedule)
+		await message.answer("Choose work schedule:", reply_markup=ikm)
 
 # Schedule processing
 @dp.message_handler(state=SearchOpts.operating_schedule_id)
@@ -251,57 +253,58 @@ async def salary_from_process(message: types.Message, state: FSMContext):
         await SearchOpts.next()
         await message.answer("Enter max. salary")
 
-
 # Max salary process
 @dp.message_handler(state=SearchOpts.salary_to)
 async def salary_to_process(message: types.Message, state: FSMContext):
-    lang = users_db.lookup_user(message.from_user.id)[1]
-    if lang == 'ru':
-        async with state.proxy() as data1:
-            data1['slary_to'] = message.text
-        await SearchOpts.next()
-        anything_education = types.KeyboardButton("Любое образование")
-        higher_education = types.KeyboardButton("Высшее образование")
-        not_full_highter_education = types.KeyboardButton("Неполное вышнее образование")
-        secondary_education = types.KeyboardButton("Среднее образование")
-        secondary_professional_education = types.KeyboardButton("Среднее профессиональное образование")
-        higher_bakalavr_education = types.KeyboardButton("Высшее(бакалавр)")
-        higher_special_education = types.KeyboardButton("Высшее(специалист)")
-        higher_magistr_education = types.KeyboardButton("Высшее(магистр)")
-        the_second_highter_education = types.KeyboardButton("Второе высшее")
-        refresher_courses = types.KeyboardButton("Курсы переподготовки")
-        mva_education = types.KeyboardButton("МВА")
-        aspirant_education = types.KeyboardButton("Аспирантура")
-        doctor_education = types.KeyboardButton("Доктоторонтура")
-        ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-        ikm.add(doctor_education, aspirant_education, mva_education, refresher_courses, the_second_highter_education, higher_magistr_education, higher_special_education, anything_education, higher_education, not_full_highter_education, secondary_education, secondary_professional_education, higher_bakalavr_education,
-        await message.answer("Выберите ваше образование:", reply_markup=ikm)
-    elif lang == 'en':
-        async with state.proxy() as data1:
-            data1['slary_to'] = message.text
-        await SearchOpts.next()
-        anything_education = types.KeyboardButton("Anything")
-        higher_education = types.KeyboardButton("Highter education")
-        not_full_highter_education = types.KeyboardButton("Not full highter education")
-        secondary_education = types.KeyboardButton("Secondary education")
-        secondary_professional_education = types.KeyboardButton("Secondary professional education")
-        higher_bakalavr_education = types.KeyboardButton("Highter(bachelor)")
-        higher_special_education = types.KeyboardButton("Highter(expert)")
-        higher_magistr_education = types.KeyboardButton("Highter(master)")
-        the_second_highter_education = types.KeyboardButton("the second highter")
-        refresher_courses = types.KeyboardButton("Refresher courses")
-        mva_education = types.KeyboardButton("МВА")
-        aspirant_education = types.KeyboardButton("Graduate school")
-        doctor_education = types.KeyboardButton("Doctor")
-        ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-        ikm.add(doctor_education, aspirant_education, mva_education, refresher_courses, the_second_highter_education, higher_magistr_education, higher_special_education, anything_education, higher_education, not_full_highter_education, secondary_education, secondary_professional_education, higher_bakalavr_education,
-        await message.answer("Choose your education:", reply_markup=ikm)
+	lang = users_db.lookup_user(message.from_user.id)[1]
+	if lang == "ru":
+		async with state.proxy() as data1:
+			data1['salary_to'] = message.text
+		await SearchOpts.next()
+		anything_education = types.KeyboardButton("Любое образование")
+		higher_education = types.KeyboardButton("Высшее образование")
+		not_full_highter_education = types.KeyboardButton("Неполное вышнее образование")
+		secondary_education = types.KeyboardButton("Среднее образование")
+		secondary_professional_education = types.KeyboardButton("Среднее профессиональное образование")
+		higher_bakalavr_education = types.KeyboardButton("Высшее(бакалавр)")
+		higher_special_education = types.KeyboardButton("Высшее(специалист)")
+		higher_magistr_education = types.KeyboardButton("Высшее(магистр)")
+		the_second_highter_education = types.KeyboardButton("Второе высшее")
+		refresher_courses = types.KeyboardButton("Курсы переподготовки")
+		mva_education = types.KeyboardButton("МВА")
+		aspirant_education = types.KeyboardButton("Аспирантура")
+		doctor_education = types.KeyboardButton("Доктоторонтура")
+		ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+		ikm.add(doctor_education, aspirant_education, mva_education, refresher_courses, the_second_highter_education, higher_magistr_education, higher_special_education, anything_education, higher_education, not_full_highter_education, secondary_education, secondary_professional_education, higher_bakalavr_education)
+		await message.answer("Выберите ваше образование:", reply_markup=ikm)
+	elif lang == "en":
+		async with state.proxy() as data1:
+			data1['salary_to'] = message.text
+		await SearchOpts.next()
+		anything_education = types.KeyboardButton("Anything")
+		higher_education = types.KeyboardButton("Highter education")
+		not_full_highter_education = types.KeyboardButton("Not full highter education")
+		secondary_education = types.KeyboardButton("Secondary education")
+		secondary_professional_education = types.KeyboardButton("Secondary professional education")
+		higher_bakalavr_education = types.KeyboardButton("Highter(bachelor)")
+		higher_special_education = types.KeyboardButton("Highter(expert)")
+		higher_magistr_education = types.KeyboardButton("Highter(master)")
+		the_second_highter_education = types.KeyboardButton("the second highter")
+		refresher_courses = types.KeyboardButton("Refresher courses")
+		mva_education = types.KeyboardButton("МВА")
+		aspirant_education = types.KeyboardButton("Graduate school")
+		doctor_education = types.KeyboardButton("Doctor")
+		ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+		ikm.add(doctor_education, aspirant_education, mva_education, refresher_courses, the_second_highter_education, higher_magistr_education, higher_special_education, anything_education, higher_education, not_full_highter_education, secondary_education, secondary_professional_education, higher_bakalavr_education)
+		await message.answer("Choose your education:", reply_markup=ikm)
+
 
 # Education processing
 @dp.message_handler(state=SearchOpts.offer_education_id)
 async def process_offer_education_id(message: types.Message, state: FSMContext):
 	lang = users_db.lookup_user(message.from_user.id)[1]
 	if lang == 'ru':
+		await SearchOpts.next()
 		if message.text == "Любое образование":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 0
@@ -437,7 +440,7 @@ async def process_offer_education_id(message: types.Message, state: FSMContext):
 # offer_experience_year_count processing
 @dp.message_handler(state=SearchOpts.offer_experience_year_count)
 async def process_offer_experience_year_count(message: types.Message, state: FSMContext):
-    lang = users_db.lookup_user(message.from_user.id)[1]
+	lang = users_db.lookup_user(message.from_user.id)[1]
 	async with state.proxy() as data1:
 		data1['offer_experience_year_count'] = message.text
 		if lang == 'ru':
@@ -451,7 +454,7 @@ async def process_offer_experience_year_count(message: types.Message, state: FSM
 # age_from processing
 @dp.message_handler(state=SearchOpts.age_from)
 async def process_age_from(message: types.Message, state: FSMContext):
-    lang = users_db.lookup_user(message.from_user.id)[1]
+	lang = users_db.lookup_user(message.from_user.id)[1]
 	async with state.proxy() as data1:
 		data1['age_from'] = message.text
 		if lang == 'ru':
@@ -464,21 +467,23 @@ async def process_age_from(message: types.Message, state: FSMContext):
 # age_to processing
 @dp.message_handler(state=SearchOpts.age_to)
 async def process_age_to(message: types.Message, state: FSMContext):
-    lang = users_db.lookup_user(message.from_user.id)[1]
+	lang = users_db.lookup_user(message.from_user.id)[1]
 	async with state.proxy() as data1:
 		data1['age_to'] = message.text
-		if lang == 'ru':
-			await SearchOpts.next()
-			true_resident = types.KeyboardButton("Да, являюсь")
-			false_resident = types.KeyboardButton("Нет, не являюсь")
-			ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-			await message.answer("Являетесь ли вы иностранным гражданином:", reply_markup = ikm)
-		elif lang == 'en':
-			await SearchOpts.next()
-			true_resident = types.KeyboardButton("Yes")
-			false_resident = types.KeyboardButton("No")
-			ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-			await message.answer("Are you a resident:", reply_markup = ikm)
+	if lang == 'ru':
+		await SearchOpts.next()
+		true_resident = types.KeyboardButton("Да, являюсь")
+		false_resident = types.KeyboardButton("Нет, не являюсь")
+		ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+		ikm.add(true_resident, false_resident)
+		await message.answer("Являетесь ли вы иностранным гражданином:", reply_markup = ikm)
+	elif lang == 'en':
+		await SearchOpts.next()
+		true_resident = types.KeyboardButton("Yes")
+		false_resident = types.KeyboardButton("No")
+		ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+		ikm.add(true_resident, false_resident)
+		await message.answer("Are you a resident:", reply_markup = ikm)
 
 
 # is_nonresident processing
@@ -491,7 +496,8 @@ async def process_is_nonresident(message: types.Message, state: FSMContext):
 			true_male = types.KeyboardButton("Да, являюсь")
 			false_male = types.KeyboardButton("Нет, не являюсь")
 			ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-			await message.answer("Вы мужчина:", reply_markup = ikm)
+			ikm.add(true_male, false_male)
+			await message.answer("Являетесь ли вы мужчиной:", reply_markup = ikm)
 	elif message.text == "Yes":
 			async with state.proxy() as data1:
 				data1['is_nonresident'] = True
@@ -499,6 +505,7 @@ async def process_is_nonresident(message: types.Message, state: FSMContext):
 			true_male = types.KeyboardButton("Yes")
 			false_male = types.KeyboardButton("No")
 			ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+			ikm.add(true_male, false_male)
 			await message.answer("Are you a male:", reply_markup = ikm)
 	elif message.text == "Нет, не являюсь":
 			async with state.proxy() as data1:
@@ -507,7 +514,8 @@ async def process_is_nonresident(message: types.Message, state: FSMContext):
 			true_male = types.KeyboardButton("Да, являюсь")
 			false_male = types.KeyboardButton("Нет, не являюсь")
 			ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-			await message.answer("Are you a male:", reply_markup = ikm)
+			ikm.add(true_male, false_male)
+			await message.answer("Являетесь ли вы мужчиной:", reply_markup = ikm)
 	elif message.text == "No":
 			async with state.proxy() as data1:
 				data1['is_nonresident'] = False
@@ -515,12 +523,13 @@ async def process_is_nonresident(message: types.Message, state: FSMContext):
 			true_male = types.KeyboardButton("Yes")
 			false_male = types.KeyboardButton("No")
 			ikm = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+			ikm.add(true_male, false_male)
 			await message.answer("Are you a male:", reply_markup = ikm)
 
 # is_male state and finish state
 @dp.message_handler(state=SearchOpts.is_male)
 async def process_is_male(message: types.Message, state: FSMContext):
-    lang = users_db.lookup_user(message.from_user.id)[1]
+	lang = users_db.lookup_user(message.from_user.id)[1]
 	if message.text == "Да, являюсь":
 			async with state.proxy() as data1:
 				data1['is_male'] = True
@@ -548,4 +557,4 @@ async def process_is_male(message: types.Message, state: FSMContext):
 
 
 if __name__ == '__main__':
-    aiogram.executor.start_polling(dp, skip_updates=True)
+	aiogram.executor.start_polling(dp, skip_updates=True)
