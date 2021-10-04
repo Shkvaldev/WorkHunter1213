@@ -534,25 +534,25 @@ async def process_is_male(message: types.Message, state: FSMContext):
 			async with state.proxy() as data1:
 				data1['is_male'] = True
 				# Making request here
-				message.answer(f'Здесь должны быть данные из нейросети :)')
+				await message.answer(data1)
 			await state.finish()
 	elif message.text == "Yes":
 			async with state.proxy() as data1:
 				data1['is_male'] = True
 				# Making request here
-				message.answer(f'Здесь должны быть данные из нейросети :)')
+				await message.answer(data1)
 			await state.finish()
 	elif message.text == "Нет, не являюсь":
 			async with state.proxy() as data1:
 				data1['is_male'] = False
 				# Making request here
-				message.answer(f'Здесь должны быть данные из нейросети :)')
+				await message.answer(data1)
 			await state.finish()
 	elif message.text == "No":
 			async with state.proxy() as data1:
 				data1['is_male'] = False
 				# Making request here
-				message.answer(f'Здесь должны быть данные из нейросети :)')
+				await message.answer(data1)
 			await state.finish()
 
 
