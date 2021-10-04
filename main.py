@@ -37,7 +37,7 @@ class SearchOpts(StatesGroup):
     salary_from = State()
     salary_to = State()
     offer_education_id = State()
-    offer_experience_year_count = State()
+    experience  = State()
     age_from = State()
     age_to = State()
     is_nonresident = State()
@@ -309,147 +309,147 @@ async def process_offer_education_id(message: types.Message, state: FSMContext):
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 0
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 		elif message.text == "Высшее образование":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 4
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 		elif message.text == "Неполное вышнее образование":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 3
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 		elif message.text == "Среднее образование":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 1
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 		elif message.text == "Среднее профессиональное образование":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 2
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 		elif message.text == "Высшее(бакалавр)":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 14
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 		elif message.text == "Высшее(специалист)":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 8
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 		elif message.text == "Высшее(магистр)":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 9
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 		elif message.text == "Второе высшее":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 12
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 		elif message.text == "Курсы переподготовки":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 11
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 		elif message.text == "МВА":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 10
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 		elif message.text == "Аспирантура":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 15
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 		elif message.text == "Доктоторонтура":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 13
 			await SearchOpts.next()
-			await message.answer("Введите опыт работы: ")
+			await message.answer("Введите минимальный возраст: ")
 	elif lang == 'en':
 		if message.text == "Anything":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 0
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 		elif message.text == "Highter education":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 4
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 		elif message.text == "Not full highter education":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 3
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 		elif message.text == "Secondary education":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 1
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 		elif message.text == "Secondary professional education":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 2
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 		elif message.text == "Highter(bachelor)":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 14
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 		elif message.text == "Highter(expert)":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 8
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 		elif message.text == "Highter(master)":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 9
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 		elif message.text == "the second highter":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 12
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 		elif message.text == "Refresher courses":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 11
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 		elif message.text == "МВА":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 10
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 		elif message.text == "Graduate school":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 15
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 		elif message.text == "Doctor":
 			async with state.proxy() as data1:
 				data1['offer_education_id'] = 13
 			await SearchOpts.next()
-			await message.answer("Enter the work experients:")
+			await message.answer("Enter the min age:")
 
+# Dead func :( I haven't enough time to fix it (
 # offer_experience_year_count processing
-@dp.message_handler(state=SearchOpts.offer_experience_year_count)
-async def process_offer_experience_year_count(message: types.Message, state: FSMContext):
-	lang = users_db.lookup_user(message.from_user.id)[1]
-	async with state.proxy() as data1:
-		data1['offer_experience_year_count'] = message.text
-		if lang == 'ru':
-			await SearchOpts.next()
-			await message.answer("Введите минимальный возраст:")
-		elif lang == 'en':
-			await SearchOpts.next()
-			await message.answer("Enter min age:")
-
+#@dp.message_handler(state=SearchOpts.experience)
+#async def offer_experience_year_count_process(message: types.Message, state: FSMContext):
+#    lang = users_db.lookup_user(message.from_user.id)[1]
+#    async with state.proxy() as data1:
+#        data1['offer_experience_year_count'] = message.text
+#    if lang == 'ru':
+#        await SearchOpts.next()
+#        await message.answer("Введите минимальный возраст:")
+#    elif lang == 'en':
+#        await SearchOpts.next()
+#        await message.answer("Enter min age:")
 
 # age_from processing
 @dp.message_handler(state=SearchOpts.age_from)
